@@ -2,13 +2,19 @@ version: '3'
 services:
   notebook:
     build:
-      context: ./build/notebook
+      context: ./build/data-science-lab
     container_name: notebook
     command: /bin/bash -c "/opt/conda/bin/jupyter notebook --notebook-dir=/opt/notebooks --ip='*' --port=8888 --no-browser --allow-root"
     restart: always
     volumes:
-      - ./src:/opt/notebooks
+      - ./src/notebooks:/opt/notebooks
     ports:
       - '5000:8888'
+  lab:
+    build:
+      context: ./build/data-science-lab
+    volumes:
+      - ./src/code:/opt/conda/envs
+    working_dir: /opt/conda/envs
 volumes:
   src:
